@@ -10,7 +10,7 @@ int main (int argc, char *argv[])
 	struct sockaddr_in address;
 	int sock = 0, valread;
 	struct sockaddr_in serv_addr;
-	char* hello = "Hello from client!";
+	char* hello;
 	char buffer[1024] = {0};
 	
 	if((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
@@ -35,10 +35,15 @@ int main (int argc, char *argv[])
 		return -1;
 	}
 	
-	send(sock, hello, strlen(hello), 0);
-	printf("Hello message sent.\n");
-	valread = read(sock, buffer, 1024);
-	printf("%s\n", buffer);
+	while(hello[0] != '0')
+	{
+		printf("Enter a message: ");
+		scanf("%s", hello);
 	
+		send(sock, hello, strlen(hello), 0);
+		printf("Message sent.\n");
+		valread = read(sock, buffer, 1024);
+		printf("%s\n", buffer);
+	}
 	return 0;
 }
